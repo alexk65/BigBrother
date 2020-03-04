@@ -1,0 +1,31 @@
+﻿@using BigBrother.Domain.Projects.Models;
+@model List<ProjectViewModel>
+@{
+    ViewData["Title"] = "Services";
+}
+
+<h1>List of services</h1>
+
+<div class="accordion">
+    @foreach (var project in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h2 data-toggle="collapse" href="#@project.Name" role="button" aria-expanded="false" aria-controls="@project.Name">@project.Name</h2>
+            </div>
+            <div class="collapse show" id="@project.Name">
+                <div class="card-body">
+                    @foreach (var subProject in project.SubProjects)
+                    {
+                        <div class="alert alert-@(subProject.IsRun ? "success" : "danger")" id="@subProject.Name" role="alert">
+                            @subProject.Name @(subProject.IsRequiredForSpa ? "(REQUIRED)" : "")
+                            <button id="@subProject.Name-reload" class="btn btn-@(subProject.IsRun ? "success" : "danger")">
+                                <span class="oi oi-reload" title="icon name" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
